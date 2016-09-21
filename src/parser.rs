@@ -1,8 +1,9 @@
 use std::env;
 
 pub fn get_args() -> String {
+    let mut args = env::args();
     // skip file location, not needed.
-    let args = env::args().next();
+    args.next();
     let mut res = String::new();
 
     for arg in args {

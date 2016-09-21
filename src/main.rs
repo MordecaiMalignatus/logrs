@@ -1,7 +1,13 @@
-mod lib;
+mod parser;
+mod logger;
 
 fn main() {
-    println!("{}", lib::parser::get_args());
+    let arg_string = parser::get_args();
+
+    match logger::log(arg_string) {
+        Ok(()) => println!("Noted."),
+        Err(_) => println!("Couldn't log entry. Better error handling to come."),
+    }
 }
 
 #[cfg(test)]
