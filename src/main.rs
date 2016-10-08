@@ -1,12 +1,17 @@
 mod parser;
 mod logger;
+mod config;
+mod dispatcher;
+mod io;
 
 fn main() {
+    let config = config::default_config();
+
     let arg_string = parser::get_args();
 
-    match logger::log(arg_string) {
-        Ok(()) => println!("Noted."),
-        Err(_) => println!("Couldn't log entry. Better error handling to come."),
+    match logger::log(arg_string, &config) {
+        Ok(()) => {},
+        Err(e) => println!("Couldn't log entry, Reason: {}", e),
     }
 }
 

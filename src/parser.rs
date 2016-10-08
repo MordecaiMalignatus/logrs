@@ -7,8 +7,8 @@ pub fn get_args() -> String {
     let mut res = String::new();
 
     for arg in args {
-        res.push_str(" ");
         res.push_str(&arg);
+        res.push_str(" ");
     }
 
     res

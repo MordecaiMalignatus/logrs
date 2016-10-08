@@ -1,20 +1,17 @@
 use std::io;
 use std::io::Write;
 use std::fs::OpenOptions;
+use std::path::Path;
+use config::Config;
 
 extern crate chrono;
 use self::chrono::*;
 
-pub fn log(entry: String) -> Result<(), io::Error> {
-    // steps needed
-    // format log entry
-    // open file
-    // append formatted entry to file
-    // clean everything up.
-
+pub fn log(entry: String, config: &Config) -> Result<(), io::Error> {
     let now = Local::now();
     let formatted_log = format_log_entry(entry, now);
-    let filepath = get_file_name(now.date());
+    let filename = get_file_name(now.date());
+    let filepath = Path::new(&config.base_filepath).join(filename);
 
     let mut file = OpenOptions::new()
         .append(true)
@@ -23,39 +20,27 @@ pub fn log(entry: String) -> Result<(), io::Error> {
         .unwrap();
 
     match file.write(formatted_log.as_bytes()) {
-        Ok(_) => Ok(()),
+        Ok(_) => {
+            println!("Noted.");
+            Ok(())
+        },
         Err(x) => Err(x),
     }
 }
 
 fn format_log_entry(entry: String, time: DateTime<Local>) -> String {
-    let mut lines = Vec::new();
-    let mut copy = entry.clone();
     let timestamp = time.format("%H:%M").to_string();
-
-    // TODO factor this out into .logrs
-    let linelength = 80;
-
-    while copy.len() > 0 {
-        if copy.len() > linelength {
-            let line: String = copy.drain(..linelength).collect();
-            lines.push(line);
-        } else {
-            lines.push(copy.clone());
-            copy = String::new();
-        }
-    }
 
     let mut res = String::new();
     res.push_str(&timestamp);
-    res.push_str(" - \n");
-    for line in lines { res.push_str(&line); res.push_str("\n");}
+    res.push_str(" -");
+    res.push_str(&entry);
     res.push_str("\n");
 
     res
 }
 
-fn get_file_name(time_of_entry: Date<Local>) -> String {
+pub fn get_file_name(time_of_entry: Date<Local>) -> String {
     time_of_entry.format("%Y-%m-%d").to_string()
 }
 
