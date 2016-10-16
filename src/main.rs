@@ -9,7 +9,7 @@ fn main() {
 
     let arg_string = parser::get_args();
 
-    match logger::log(arg_string, &config) {
+    match dispatcher::dispatch(arg_string, &config) {
         Ok(()) => {},
         Err(e) => println!("Couldn't log entry, Reason: {}", e),
     }
