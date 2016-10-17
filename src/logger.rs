@@ -20,10 +20,7 @@ pub fn log(entry: String, config: &Config) -> Result<(), io::Error> {
         .unwrap();
 
     match file.write(formatted_log.as_bytes()) {
-        Ok(_) => {
-            println!("Noted.");
-            Ok(())
-        },
+        Ok(_)  => Ok(()),
         Err(x) => Err(x),
     }
 }

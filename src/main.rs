@@ -6,11 +6,10 @@ mod io;
 
 fn main() {
     let config = config::default_config();
-
     let arg_string = parser::get_args();
 
     match dispatcher::dispatch(arg_string, &config) {
-        Ok(()) => {},
+        Ok(()) => println!("Noted."),
         Err(e) => println!("Couldn't log entry, Reason: {}", e),
     }
 }
