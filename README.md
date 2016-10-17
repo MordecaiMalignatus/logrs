@@ -14,8 +14,8 @@ Logrs will also give you recaps of days:
 
 ```
 $ logrs show today
-07:51 - Test for file display
-14:09 - test!
+ 07:51 - Test for file display
+ 14:09 - test!
 ```
 
 It sorts them neatly into daily files in ISO (yyyy-mm-dd) format, into a folder of your choosing.
@@ -29,8 +29,8 @@ one line per entry. It also ends up being a not-quite-formally-correct timestamp
 
 ```
 $ grep -ri test ~/logs/
-/Users/az/logs//2016-10-16:07:51 - Test for file display
-/Users/az/logs//2016-10-16:14:09 - test!
+/Users/az/logs//2016-10-16: 07:51 - Test for file display
+/Users/az/logs//2016-10-16: 14:09 - test!
 ```
 
 A future patch may include an easier wrapper in the form of `logrs search`.
