@@ -32,6 +32,7 @@ fn format_log_entry(entry: String, time: DateTime<Local>) -> String {
     let timestamp = time.format("%H:%M").to_string();
 
     let mut res = String::new();
+    res.push_str(" - ");
     res.push_str(&timestamp);
     res.push_str(" - ");
     res.push_str(&entry);
