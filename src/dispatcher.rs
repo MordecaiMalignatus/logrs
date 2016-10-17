@@ -27,9 +27,7 @@ fn dispatch_display(entry: String, config: &Config) -> Result<(), io::Error> {
         print_file(path)
 
     } else if entry.starts_with("show yesterday") {
-
-        let today = now.date();
-        let yesterday = today - Duration::days(1);
+        let yesterday = now.date() - Duration::days(1);
         let file_name = get_file_name(yesterday);
 
         let mut path = config.base_filepath.clone();
@@ -38,5 +36,18 @@ fn dispatch_display(entry: String, config: &Config) -> Result<(), io::Error> {
         print_file(path)
     } else {
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod test {
+    extern crate chrono;
+    use self::chrono::*;
+
+    #[test]
+    fn time_arithmetic() {
+        let date = Local.ymd(2000, 1, 1);
+
+        assert!(date + Duration::days(1) == Local.ymd(2000, 1, 2));
     }
 }
