@@ -1,5 +1,5 @@
 use config::Config;
-use logger::log;
+use logger;
 use logger::get_file_name;
 use io::print_file;
 
@@ -12,7 +12,7 @@ pub fn dispatch(entry: String, config: &Config) -> Result<(), io::Error> {
     if entry.starts_with("show") {
         dispatch_display(entry, config)
     } else {
-        log(entry, config)
+        logger::log(entry, config)
     }
 }
 
@@ -35,7 +35,7 @@ fn dispatch_display(entry: String, config: &Config) -> Result<(), io::Error> {
 
         print_file(path)
     } else {
-        Ok(())
+        logger::log(entry, config)
     }
 }
 
