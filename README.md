@@ -41,6 +41,6 @@ and micromanaging bosses, like a voodoo charm.
 - `ln -s /path/here/logrs/target/release/logrs /some/other/path/logrs`
 
 ## Aaaaz, what's to come in the future?
-- [x]`logrs search` -- A simple wrapper for grep.
+- [x] `logrs search` -- A simple wrapper for grep.
 - [ ] `logrs archive` -- Moving all things older to a month to a different folder, to avoid cluttering grep results. This will probably be automatic with a dotfile option.
 - [ ] `logrs show 2015-01-01` -- Arbitrary date retrieval, that includes archives.
