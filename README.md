@@ -22,18 +22,8 @@ It sorts them neatly into daily files in ISO (yyyy-mm-dd) format, into a folder 
 (For which you currently have to edit the code, dotfile soon to come.)
 
 ## That's all? What about searching?
-Yes, that is all. For searching, there's `grep`. There's always `grep`.
-To presume I could write a better, or even adequate grep is not likely, so instead,
-the output has been formatted in a way that facilitates how `grep` works,
-one line per entry. It also ends up being a not-quite-formally-correct timestamp.
-
-```
-$ grep -ri test ~/logs/
-/Users/az/logs//2016-10-16: 07:51 - Test for file display
-/Users/az/logs//2016-10-16: 14:09 - test!
-```
-
-A future patch may include an easier wrapper in the form of `logrs search`.
+I implemented `grep` as a subcommand!
+`logrs search Thing` is equal to `grep -ri Thing ~/base/logs/path/here`. Saves some typing. :)
 
 ## But Az, why does this exist?
 Did you ever have a really obnoxious boss, that will rub things in your face
