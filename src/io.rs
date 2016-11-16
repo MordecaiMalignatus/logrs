@@ -18,15 +18,3 @@ pub fn print_file(filename: String) -> Result<(), io::Error> {
         Err(e) => Err(e)
     }
 }
-
-#[cfg(test)]
-mod test {
-    use std::fs;
-    use config;
-
-    // #[test]
-    // fn test_display() {
-    //     let config = config.default_config()
-    //     let file = fs::OpenOptions::new().write(true).create(true).open(config.base_filepath)
-    // }
-}

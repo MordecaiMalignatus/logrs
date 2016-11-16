@@ -7,9 +7,9 @@ use config::Config;
 extern crate chrono;
 use self::chrono::*;
 
-pub fn log(entry: String, config: &Config) -> Result<(), io::Error> {
+pub fn log(entry: &String, config: &Config) -> Result<(), io::Error> {
     let now = Local::now();
-    let formatted_log = format_log_entry(entry, now);
+    let formatted_log = format_log_entry(&entry, now);
     let filename = get_file_name(now.date());
     let filepath = Path::new(&config.base_filepath).join(filename);
 
@@ -28,7 +28,7 @@ pub fn log(entry: String, config: &Config) -> Result<(), io::Error> {
     }
 }
 
-fn format_log_entry(entry: String, time: DateTime<Local>) -> String {
+fn format_log_entry(entry: &String, time: DateTime<Local>) -> String {
     let timestamp = time.format("%H:%M").to_string();
 
     let mut res = String::new();
