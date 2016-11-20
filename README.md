@@ -21,15 +21,15 @@ $ logrs show today
 It sorts them neatly into daily files in ISO (yyyy-mm-dd) format, into a folder of your choosing.
 (For which you currently have to edit the code, dotfile soon to come.)
 
-## That's all? What about searching?
+### That's all? What about searching?
 There's a `search` subcommand that wraps `grep`:
 ```
-$ logr search logrs
+$ logrs search logrs
 /Users/az/logs//2016-10-18: 10:59 - wheee more improvements to logrs
 /Users/az/logs//2016-11-20: 16:13 - logrs test search string stuff.
 ```
 
-## What's with the weird format?
+### What's with the weird format?
 The format is as it is to complement `grep`, so every entry is on one line, and grep doesn't just
 give you fragments. Plus, it forms a mini timestamp with the file name, which is also nice.
 

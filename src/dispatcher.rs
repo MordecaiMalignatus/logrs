@@ -13,9 +13,16 @@ pub fn dispatch(entry: String, config: &Config) -> Result<(), io::Error> {
     match entry {
         ref c if c.starts_with("show") => dispatch_display(&entry, config),
         ref c if c.starts_with("search") => dispatch_search(&entry, config),
+        ref c if c.starts_with("archive") => dispatch_archiving(config),
         _ => logger::log(&entry, config)
     }
 }
+
+fn dispatch_archiving(config: &Config) -> Result<(), io::Error> {
+    println!("Not implemented just yet. :)");
+    Ok(())
+}
+
 
 fn dispatch_search(entry: &str, config: &Config) -> Result<(), io::Error> {
     let search_string: &str = &entry[6..];
