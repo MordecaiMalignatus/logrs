@@ -29,6 +29,10 @@ $ logr search logrs
 /Users/az/logs//2016-11-20: 16:13 - logrs test search string stuff.
 ```
 
+## What's with the weird format?
+The format is as it is to complement `grep`, so every entry is on one line, and grep doesn't just
+give you fragments. Plus, it forms a mini timestamp with the file name, which is also nice.
+
 ## But Az, why does this exist?
 Did you ever have a really obnoxious boss, that will rub things in your face
 for months, should you forget or mess something up? I did. It wasn't great.
