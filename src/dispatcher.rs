@@ -50,16 +50,15 @@ fn dispatch_display(entry: &String, config: &Config) -> Result<(), io::Error> {
 
         print_file(path)
     } else {
-        logger::log(&entry, config)
+
+        // Cut of the "show" from the command
+        let date = &entry[5..].trim();
+        let mut file_name = String::new();
+        file_name.push_str(&config.base_filepath);
+        file_name.push_str(date);
+
+        print_file(file_name)
     }
-}
-
-pub fn parse_iso_datestring(date: &str) -> ParseResult<DateTime<FixedOffset>> {
-    let mut new_date = String::new();
-    new_date.push_str(date);
-    new_date.push_str(" 00:00:00");
-
-    DateTime::parse_from_str(&new_date, "%F %T")
 }
 
 #[cfg(test)]
@@ -73,14 +72,5 @@ mod test {
         let date = Local.ymd(2000, 1, 1);
 
         assert!(date + Duration::days(1) == Local.ymd(2000, 1, 2));
-    }
-
-    #[test]
-    fn iso_time_parsing() {
-        let parse_date = parse_iso_datestring("2011-01-01").unwrap().date();
-
-        assert!(parse_date.year() == 2011);
-        assert!(parse_date.month() == 1);
-        assert!(parse_date.day() == 1);
     }
 }

@@ -11,6 +11,7 @@ pub fn print_file(filename: String) -> Result<(), io::Error> {
         Ok(mut f) => {
             let mut content = String::new();
             try!(f.read_to_string(&mut content));
+            println!("");
             println!("{}", content);
             Ok(())
         }
