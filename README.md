@@ -22,8 +22,12 @@ It sorts them neatly into daily files in ISO (yyyy-mm-dd) format, into a folder 
 (For which you currently have to edit the code, dotfile soon to come.)
 
 ## That's all? What about searching?
-I implemented `grep` as a subcommand!
-`logrs search Thing` is equal to `grep -ri Thing ~/base/logs/path/here`. Saves some typing. :)
+There's a `search` subcommand that wraps `grep`:
+```
+$ logr search logrs
+/Users/az/logs//2016-10-18: 10:59 - wheee more improvements to logrs
+/Users/az/logs//2016-11-20: 16:13 - logrs test search string stuff.
+```
 
 ## But Az, why does this exist?
 Did you ever have a really obnoxious boss, that will rub things in your face
