@@ -57,27 +57,12 @@ fn dispatch_display(entry: &String, config: &Config) -> Result<(), io::Error> {
 
         print_file(path)
     } else {
-
         // Cut of the "show" from the command
         let date = &entry[5..].trim();
-        let mut file_name = String::new();
-        file_name.push_str(&config.base_filepath);
-        file_name.push_str(date);
+        let mut path = String::new();
+        path.push_str(&config.base_filepath);
+        path.push_str(date);
 
-        print_file(file_name)
-    }
-}
-
-#[cfg(test)]
-mod test {
-    extern crate chrono;
-    use self::chrono::*;
-    use super::*;
-
-    #[test]
-    fn time_arithmetic() {
-        let date = Local.ymd(2000, 1, 1);
-
-        assert!(date + Duration::days(1) == Local.ymd(2000, 1, 2));
+        print_file(path)
     }
 }
