@@ -1,13 +1,24 @@
 use io::read_file;
 use std::io::Error;
+use std::env;
+use std::path;
 
 pub struct Config {
-    pub base_filepath: String,
+    pub base_filepath: path::PathBuf,
 }
 
-fn default_config() -> Config {
+pub fn default_config() -> Config {
+    let logs_path = match env::home_dir() {
+        Some(mut path) => {
+            // Add "/logs/" to user home directory path."
+            path.push("logs");
+            path
+        },
+        None => panic!("Unable to get your home dir!"),
+    };
+
     Config {
-        base_filepath: "/Users/az/logs/".to_owned(),
+        base_filepath: logs_path,
     }
 }
 

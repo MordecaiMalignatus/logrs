@@ -11,6 +11,7 @@ pub fn log(entry: &String, config: &Config) -> Result<(), io::Error> {
     let formatted_log = format_log_entry(&entry, now);
     let filename = get_file_name(now.date());
     let filepath = Path::new(&config.base_filepath).join(filename);
+    println!("{}", filepath.display());
 
     match append_to_file(filepath, formatted_log) {
         Ok(_)  => {
