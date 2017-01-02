@@ -41,27 +41,23 @@ fn dispatch_search(entry: &str, config: &Config) -> Result<(), io::Error> {
 
 fn dispatch_display(entry: &String, config: &Config) -> Result<(), io::Error> {
     let now = Local::now();
+    let mut path = config.base_filepath.clone();
 
     if entry.starts_with("show today") {
         let file_name = get_file_name(now.date());
-        let mut path = config.base_filepath.clone();
-        path.push_str(&file_name);
-
+        path.push(&file_name);
         print_file(path)
 
     } else if entry.starts_with("show yesterday") {
         let yesterday  = now.date() - Duration::days(1);
         let file_name = get_file_name(yesterday);
-        let mut path = config.base_filepath.clone();
-        path.push_str(&file_name);
+        path.push(&file_name);
 
         print_file(path)
     } else {
         // Cut of the "show" from the command
         let date = &entry[5..].trim();
-        let mut path = String::new();
-        path.push_str(&config.base_filepath);
-        path.push_str(date);
+        path.push(date);
 
         print_file(path)
     }

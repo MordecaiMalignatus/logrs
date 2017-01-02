@@ -1,9 +1,10 @@
 use std::io;
+use std::io::Error;
 use std::io::{Read, Write};
 use std::path::PathBuf;
 use std::fs::OpenOptions;
 
-pub fn print_file(filename: String) -> Result<(), io::Error> {
+pub fn print_file(filename: PathBuf) -> Result<(), io::Error> {
     let file = OpenOptions::new()
         .read(true)
         .open(&filename);
@@ -45,4 +46,8 @@ pub fn append_to_file(filename: PathBuf, content: String) -> Result<usize, io::E
         .open(&filename)?;
 
     file.write(content.as_bytes())
+}
+
+pub fn read_file(filename: &str) -> Result<usize, Error> {
+    return Ok(1)
 }

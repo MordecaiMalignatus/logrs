@@ -1,0 +1,9 @@
+Automatically create directory ~/logs/.
+Check if file + directory exists before writing.
+Use parsing library (clap), it would probably replace dispatcher to some extent.
+Pass path::Path instead of String.
+
+Fix:
+# This should probably list available commands - clap would fix this.
+$ target/debug/logrs show
+Couldn't log entry, Reason: Is a directory (os error 21)
