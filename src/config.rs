@@ -22,17 +22,19 @@ pub fn default_config() -> Config {
     }
 }
 
-pub fn read_from_dotfile() -> Config {
-    match read_file("~/.logrs") {
-        Ok(file_content) => {
-            default_config()
-        }
-        Err(e) => {
-            println!("Couldn't find dotfile, creating...");
-            make_default_dotfile().expect("Can't create default dotfile. Shit's fucked.")
-        }
-    }
-}
+// This needs to be reworked to actuall use PathBuf and find the dotfile with that.
+
+// pub fn read_from_dotfile() -> Config {
+//     match read_file("~/.logrs") {
+//         Ok(file_content) => {
+//             default_config()
+//         }
+//         Err(e) => {
+//             println!("Couldn't find dotfile, creating...");
+//             make_default_dotfile().expect("Can't create default dotfile. Shit's fucked.")
+//         }
+//     }
+// }
 
 fn make_default_dotfile() -> Result<Config, Error> {
     Ok(default_config())
