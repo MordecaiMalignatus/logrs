@@ -1,0 +1,5 @@
+Automatically create directory ~/logs/.
+Check if file + directory exists before writing.
+Do not log empty inputs.
+Use parsing library (clap).
+Pass path::Path instead of String.
