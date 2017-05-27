@@ -15,15 +15,9 @@ pub fn dispatch(entry: String, config: &Config) -> Result<(), io::Error> {
         ref c if c.starts_with("show") => dispatch_display(&entry, config),
         ref c if c.starts_with("search") => dispatch_search(&entry, config),
         ref c if c.starts_with("repl") => dispatch_repl(config),
-        // ref c if c.starts_with("archive") => dispatch_archiving(config),
         _ => logger::log(&entry, config),
     }
 }
-
-// fn dispatch_archiving(config: &Config) -> Result<(), io::Error> {
-//     println!("Not implemented just yet. :)");
-//     Ok(())
-// }
 
 fn dispatch_repl(config: &Config) -> Result<(), io::Error> {
     let mut current_input = String::new();
@@ -39,6 +33,7 @@ fn dispatch_repl(config: &Config) -> Result<(), io::Error> {
             Ok(_) => {}
             Err(e) => return Err(e),
         }
+
         match current_input {
             ref x if x.trim() == "quit" => break,
             ref x if x.trim() == "repl" => println!("I can't let you do that, Dave"),
