@@ -38,7 +38,7 @@ fn dispatch_repl(config: &Config) -> Result<(), io::Error> {
             ref x if x.trim() == "quit" => break,
             ref x if x.trim() == "repl" => println!("I can't let you do that, Dave"),
             ref x => {
-                match dispatch(x.to_string(), config) {
+                match dispatch(x.trim().to_string(), config) {
                     Ok(_) => (),
                     Err(e) => return Err(e),
                 }
