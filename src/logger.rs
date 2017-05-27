@@ -19,10 +19,10 @@ pub fn log(entry: &String, config: &Config) -> Result<(), io::Error> {
     let filepath = Path::new(&config.base_filepath).join(filename);
 
     match append_to_file(filepath, formatted_log) {
-        Ok(_)  => {
+        Ok(_) => {
             println!("Noted.");
             Ok(())
-        },
+        }
         Err(x) => Err(x),
     }
 }

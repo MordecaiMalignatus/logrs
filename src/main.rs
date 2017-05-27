@@ -9,13 +9,13 @@ fn main() {
     let arg_string = parser::get_args();
 
     match dispatcher::dispatch(arg_string, &config) {
-        Ok(()) => {},
+        Ok(()) => {}
         Err(e) => println!("Couldn't log entry, Reason: {}", e),
     }
 }
 
 #[cfg(test)]
-mod test{
+mod test {
     #[test]
     fn test_sanity() {
         assert!(1 + 1 == 2);

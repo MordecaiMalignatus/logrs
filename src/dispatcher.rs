@@ -13,15 +13,15 @@ pub fn dispatch(entry: String, config: &Config) -> Result<(), io::Error> {
     match entry {
         ref c if c.starts_with("show") => dispatch_display(&entry, config),
         ref c if c.starts_with("search") => dispatch_search(&entry, config),
-        ref c if c.starts_with("archive") => dispatch_archiving(config),
-        _ => logger::log(&entry, config)
+        // ref c if c.starts_with("archive") => dispatch_archiving(config),
+        _ => logger::log(&entry, config),
     }
 }
 
-fn dispatch_archiving(config: &Config) -> Result<(), io::Error> {
-    println!("Not implemented just yet. :)");
-    Ok(())
-}
+// fn dispatch_archiving(config: &Config) -> Result<(), io::Error> {
+//     println!("Not implemented just yet. :)");
+//     Ok(())
+// }
 
 
 fn dispatch_search(entry: &str, config: &Config) -> Result<(), io::Error> {
@@ -49,7 +49,7 @@ fn dispatch_display(entry: &String, config: &Config) -> Result<(), io::Error> {
         print_file(path)
 
     } else if entry.starts_with("show yesterday") {
-        let yesterday  = now.date() - Duration::days(1);
+        let yesterday = now.date() - Duration::days(1);
         let file_name = get_file_name(yesterday);
         path.push(&file_name);
 

@@ -11,5 +11,5 @@ pub fn get_args() -> String {
         res.push_str(" ");
     }
 
-    res
+    res.trim().to_owned()
 }
