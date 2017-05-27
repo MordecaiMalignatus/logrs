@@ -29,6 +29,10 @@ $ logrs search logrs
 /Users/az/logs//2016-11-20: 16:13 - logrs test search string stuff.
 ```
 
+### I don't want to type `logrs` all the time! 
+Well, handy for you there's a `repl` mode. Simply call `logrs repl` and it will be just as if the 
+prefix was typed for you every time. Enter `quit` to... quit. 
+
 ### What's with the weird format?
 The format is as it is to complement `grep`, so every entry is on one line, and grep doesn't just
 give you fragments. Plus, it forms a mini timestamp with the file name, which is also nice.
