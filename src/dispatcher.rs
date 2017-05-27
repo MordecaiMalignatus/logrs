@@ -2,6 +2,7 @@ use config::Config;
 use logger;
 use logger::get_file_name;
 use io::print_file;
+use std::io::Write;
 
 use std::io;
 use std::process::Command;
@@ -13,6 +14,7 @@ pub fn dispatch(entry: String, config: &Config) -> Result<(), io::Error> {
     match entry {
         ref c if c.starts_with("show") => dispatch_display(&entry, config),
         ref c if c.starts_with("search") => dispatch_search(&entry, config),
+        ref c if c.starts_with("repl") => dispatch_repl(config),
         // ref c if c.starts_with("archive") => dispatch_archiving(config),
         _ => logger::log(&entry, config),
     }
@@ -22,6 +24,35 @@ pub fn dispatch(entry: String, config: &Config) -> Result<(), io::Error> {
 //     println!("Not implemented just yet. :)");
 //     Ok(())
 // }
+
+fn dispatch_repl(config: &Config) -> Result<(), io::Error> {
+    let mut current_input = String::new();
+    let mut output = io::stdout();
+    let input = io::stdin();
+
+    loop {
+        current_input = String::new();
+        print!("logrs >> ");
+        output.flush();
+
+        match input.read_line(&mut current_input) {
+            Ok(_) => {}
+            Err(e) => return Err(e),
+        }
+        match current_input {
+            ref x if x.trim() == "quit" => break,
+            ref x if x.trim() == "repl" => println!("I can't let you do that, Dave"),
+            ref x => {
+                match dispatch(x.to_string(), config) {
+                    Ok(_) => (),
+                    Err(e) => return Err(e),
+                }
+            }
+        }
+    }
+
+    Ok(())
+}
 
 
 fn dispatch_search(entry: &str, config: &Config) -> Result<(), io::Error> {
