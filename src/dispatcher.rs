@@ -20,14 +20,14 @@ pub fn dispatch(entry: String, config: &Config) -> Result<(), io::Error> {
 }
 
 fn dispatch_repl(config: &Config) -> Result<(), io::Error> {
-    let mut current_input = String::new();
+    let mut current_input: String;
     let mut output = io::stdout();
     let input = io::stdin();
 
     loop {
         current_input = String::new();
         print!("logrs >> ");
-        output.flush();
+        let _ = output.flush();
 
         match input.read_line(&mut current_input) {
             Ok(_) => {}
