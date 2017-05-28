@@ -55,4 +55,6 @@ and micromanaging bosses, like a voodoo charm.
 ## Aaaaz, what's to come in the future?
 - [x] `logrs search` -- A simple wrapper for grep.
 - [x] `logrs show 2015-01-01` -- Arbitrary date retrieval
+- [ ] The dotfile -- This is the urgent next-up thing that needs to happen
+- [ ] `logrs --config` -- In-program configuration of the info kept in the dotfile.
 - [ ] `logrs archive` -- Moving all things older to a month to a different folder, to avoid cluttering grep results. This will probably be automatic with a dotfile option.
