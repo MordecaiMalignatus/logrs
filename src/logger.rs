@@ -3,6 +3,7 @@ use std::io::{Error, ErrorKind};
 use std::path::Path;
 use config::Config;
 use io::append_to_file;
+use io::create_path;
 
 extern crate chrono;
 use self::chrono::*;
@@ -23,7 +24,15 @@ pub fn log(entry: &String, config: &Config) -> Result<(), io::Error> {
             println!("Noted.");
             Ok(())
         }
-        Err(x) => Err(x),
+        Err(x) => match x { 
+            ref e if e.raw_os_error() == Some(2) => {
+                match create_path(&config.base_filepath) {
+                    Ok(()) =>  log(entry, config), 
+                    Err(x) => Err(x)
+                }
+            }
+            _ => Err(x)
+        }
     }
 }
 
