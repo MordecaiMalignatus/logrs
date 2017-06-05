@@ -29,11 +29,20 @@ pub fn read_file(filename: PathBuf) -> Result<String, Error> {
     }
 }
 
-pub fn append_to_file(filename: PathBuf, content: String) -> Result<usize, io::Error> {
+pub fn append_to_file(filename: &PathBuf, content: String) -> Result<usize, io::Error> {
     let mut file = OpenOptions::new()
         .create(true)
         .append(true)
-        .open(&filename)?;
+        .open(filename)?;
+
+    file.write(content.as_bytes())
+}
+
+pub fn write_to_file(filename: &PathBuf, content: String) -> Result<usize, io::Error> { 
+    let mut file = OpenOptions::new()
+        .create(true)
+        .write(true)
+        .open(filename)?;
 
     file.write(content.as_bytes())
 }
