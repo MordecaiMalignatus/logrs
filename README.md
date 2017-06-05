@@ -18,8 +18,8 @@ $ logrs show today
  14:09 - test!
 ```
 
-It sorts them neatly into daily files in ISO (yyyy-mm-dd) format, into a folder of your choosing.
-(For which you currently have to edit the code, dotfile soon to come.)
+It sorts them neatly into daily files in ISO (yyyy-mm-dd) format, into a folder of your choosing. 
+(by default, `~/logs/`, but editable in the `~/.logrs` dotfile which is created upon use.)
 
 ### That's all? What about searching?
 There's a `search` subcommand that wraps `grep`:
