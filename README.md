@@ -18,8 +18,8 @@ $ logrs show today
  14:09 - test!
 ```
 
-It sorts them neatly into daily files in ISO (yyyy-mm-dd) format, into a folder of your choosing.
-(For which you currently have to edit the code, dotfile soon to come.)
+It sorts them neatly into daily files in ISO (yyyy-mm-dd) format, into a folder of your choosing. 
+(by default, `~/logs/`, but editable in the `~/.logrs` dotfile which is created upon use.)
 
 ### That's all? What about searching?
 There's a `search` subcommand that wraps `grep`:
@@ -55,4 +55,5 @@ and micromanaging bosses, like a voodoo charm.
 ## Aaaaz, what's to come in the future?
 - [x] `logrs search` -- A simple wrapper for grep.
 - [x] `logrs show 2015-01-01` -- Arbitrary date retrieval
+- [x] Dotfile implementation.
 - [ ] `logrs archive` -- Moving all things older to a month to a different folder, to avoid cluttering grep results. This will probably be automatic with a dotfile option.
