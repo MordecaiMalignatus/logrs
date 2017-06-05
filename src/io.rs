@@ -7,7 +7,7 @@ use std::fs::OpenOptions;
 pub fn print_file(filename: PathBuf) -> Result<(), io::Error> {
     match read_file(filename) {
         Ok(content) => {
-            println!("\n {}", content);
+            println!("\n{}", content);
             Ok(())
         }
 
