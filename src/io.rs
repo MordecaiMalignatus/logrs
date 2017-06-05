@@ -49,8 +49,5 @@ pub fn write_to_file(filename: &PathBuf, content: String) -> Result<usize, io::E
 }
 
 pub fn create_path(path: &PathBuf) -> Result<(), io::Error> { 
-    match DirBuilder::new().recursive(true).create(path) {
-        Ok(()) => Ok(()),
-        Err(x) => Err(x),
-    }
+    DirBuilder::new().recursive(true).create(path)
 }
