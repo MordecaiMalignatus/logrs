@@ -30,10 +30,9 @@ pub fn get_config() -> Config {
         }, 
         Err(_) => { 
             match make_default_dotfile() {
-                Ok(t) => t, 
+                Ok(t) => t,
                 Err(e) => {
-                    println!("Error: {}", e);
-                    panic!("read above.");
+                    panic!("Can't create default dotfile, reason: {}", e);
                 }
             }
         }
@@ -62,7 +61,10 @@ fn make_default_dotfile() -> Result<Config, Error> {
     let dotfile = &dotfile_path();
 
     match write_to_file(dotfile, config_string) {
-        Ok(_) => Ok(config), 
+        Ok(_) => {
+            println!("Creating dotfile...");
+            Ok(config)
+        }, 
         Err(e) => Err(e),
     }
 }
