@@ -2,6 +2,7 @@ use std::io;
 use std::io::Error;
 use std::io::{Read, Write};
 use std::path::PathBuf;
+use std::fs::DirBuilder; 
 use std::fs::OpenOptions;
 
 pub fn print_file(filename: PathBuf) -> Result<(), io::Error> {
@@ -45,4 +46,11 @@ pub fn write_to_file(filename: &PathBuf, content: String) -> Result<usize, io::E
         .open(filename)?;
 
     file.write(content.as_bytes())
+}
+
+pub fn create_path(path: &PathBuf) -> Result<(), io::Error> { 
+    match DirBuilder::new().recursive(true).create(path) {
+        Ok(()) => Ok(()),
+        Err(x) => Err(x),
+    }
 }
