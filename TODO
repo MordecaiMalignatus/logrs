@@ -1,5 +1,3 @@
-Automatically create directory ~/logs/.
-Check if file + directory exists before writing.
 Use parsing library (clap), it would probably replace dispatcher to some extent.
 Pass path::Path instead of String.
 
