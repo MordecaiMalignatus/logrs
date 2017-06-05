@@ -5,3 +5,4 @@ authors = ["Az4reus <az4reus@gmail.com>"]
 
 [dependencies]
 chrono = "0.2"
+toml = "0.4.1"
