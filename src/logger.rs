@@ -1,6 +1,6 @@
 use std::fs::{File, create_dir};
 use std::io;
-use std::io::Write;
+use std::io::{Read, Write};
 use std::path::Path;
 
 use config::Config;
@@ -36,11 +36,26 @@ pub fn log(entry: &str, config: &Config) -> Result<(), io::Error> {
         Err(err) => return Err(err),
     };
 
-    match file.write_all(entry.as_bytes()) {
-        Ok(_) => {
-            println!("Noted. {}", filepath.display());
-            Ok(())
+    let mut data = entry.to_string();
+    let mut buf = String::new();
+    if entry == "-" {
+        let stdin = io::stdin();
+        let mut stdin_handle = stdin.lock();
+        match stdin_handle.read_to_string(&mut buf) {
+            Ok(_) => {},
+            Err(err) => {return Err(err)}
         }
-        Err(err) => Err(err)
+        data = buf.to_owned();
+    }
+
+    match file.write_all(data.as_bytes()) {
+        Ok(_) => {
+            println!("Noted. {}", ulid.to_string());
+            match file.flush() {
+                Ok(_) => Ok(()),
+                Err(err) => Err(err),
+            }
+        }
+        Err(err) => Err(err),
     }
 }

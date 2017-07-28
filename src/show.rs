@@ -1,10 +1,11 @@
 use std::fs::{File, read_dir};
-use std::io::{BufReader, Read};
+use std::io::{BufReader, Read, Write};
 use std::path::{Path, PathBuf};
 
 use config::Config;
 
 use chrono::prelude::{Local};
+use termcolor::{Color, ColorChoice, ColorSpec, StandardStream, WriteColor};
 use time::Duration;
 use ulid::Ulid;
 
@@ -57,6 +58,11 @@ pub fn show_id(id: &str, config: &Config) {
     };
     let date = ulid.datetime().with_timezone(&Local).date();
     let path = Path::new(&config.base_filepath).join(date.format("%Y-%m-%d").to_string()).join(id);
+
+    if !path.exists() {
+        eprintln!("Record {} does not exists!", ulid.to_string());
+        return
+    }
 
     show_file(path);
 }
@@ -114,7 +120,14 @@ fn show_file(path: PathBuf) {
         }
     };
     let datetime = ulid.datetime().with_timezone(&Local);
-    println!("{} ({})", datetime, ulid.to_string());
+    // Colorizing the output. This is extremely ugly, anyone got ideas how
+    // to make this nicer?
+    let mut stdout = StandardStream::stdout(ColorChoice::Always); 
+    stdout.set_color(ColorSpec::new().set_fg(Some(Color::Yellow)));
+    write!(&mut stdout, "{} ", datetime);
+    stdout.set_color(ColorSpec::new().set_fg(Some(Color::Green)));
+    write!(&mut stdout, "({})\n", ulid.to_string());
+    stdout.set_color(ColorSpec::new().set_fg(Some(Color::White)));
     println!("{}", contents);
     println!("");
 }

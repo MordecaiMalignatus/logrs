@@ -7,7 +7,11 @@ and keeps them well-fed and safe. Just like that:
 
 ```
 $ logrs add test!
-Noted. ... /logs/2017-07-28/01BP4JEXE2K174BDYAK00NTV84
+Noted. 01BP4JEXE2K174BDYAK00NTV84
+
+$ logrs show 01BP4JEXE2K174BDYAK00NTV84
+2017-07-28 14:24:10.946 +02:00 (01BP4JEXE2K174BDYAK00NTV84)
+test!
 ```
 
 Logrs will also give you recaps of days:
@@ -21,6 +25,39 @@ test 1
 test!
 ```
 
+You can specify any date and it will fetch all records for that date:
+
+```
+$ logrs show 2017-06-05
+No records for 2017-06-05.
+
+$ logrs show 2017-07-28
+2017-07-28 11:20:23.671 +02:00 (01BP47YCKQ53DWVJTWENFWA0DA)
+test 1
+
+2017-07-28 14:24:10.946 +02:00 (01BP4JEXE2K174BDYAK00NTV84)
+test!
+```
+
+You can also record multiple lines, or entire files from `stdin`:
+```
+$ logrs add -
+You can write first line,
+second line. Or any number of lines.
+<Ctrl-d>
+Noted. 01BP4Q35QDGF4MFBGH6BJQFZVY
+```
+Please note, the file needs to contain valid UTF-8 text.
+```
+$ logrs add - < somefile
+Noted. 01BP4Q35QDGF4MFBGH6BJQFZVV
+
+or
+
+$ cat somefile | logrs add -
+Noted. 01BP4Q35QDGF4MFBGH6BJQFZVV
+```
+
 It sorts them neatly into daily folders in ISO (yyyy-mm-dd) format, into a folder of your choosing.
 (For which you currently have to edit the code, dotfile soon to come.)
 
@@ -28,9 +65,11 @@ It sorts them neatly into daily folders in ISO (yyyy-mm-dd) format, into a folde
 There's a `search` subcommand that wraps `grep`:
 ```
 $ logrs search test
-/Users/lulu/logs/2017-07-28/01BP4JEXE2K174BDYAK00NTV84:test!
-/Users/az/logs//2016-10-18: 10:59 - wheee more improvements to logrs
-/Users/az/logs//2016-11-20: 16:13 - logrs test search string stuff.
+2017-07-27 14:00:45.672 +02:00 (01BP1YQA38CEVG5729RXY95BFQ):$ logrs test!
+2017-07-27 14:00:45.672 +02:00 (01BP1YQA38CEVG5729RXY95BFQ): 07
+2017-07-27 14:00:45.672 +02:00 (01BP1YQA38CEVG5729RXY95BFQ): 14
+2017-07-27 14:00:45.672 +02:00 (01BP1YQA38CEVG5729RXY95BFQ):/Users/az/logs//2016-11-20
+2017-07-28 14:24:10.946 +02:00 (01BP4JEXE2K174BDYAK00NTV84):test!
 ```
 
 ### What's with the weird format?

@@ -1,6 +1,7 @@
 extern crate clap;
 extern crate chrono;
 extern crate regex;
+extern crate termcolor;
 extern crate time;
 extern crate ulid;
 

@@ -1,8 +1,10 @@
 use config::Config;
+use std::io::Write;
 use std::path::PathBuf;
 use std::process::Command;
 
 use chrono::prelude::Local;
+use termcolor::{Color, ColorChoice, ColorSpec, StandardStream, WriteColor};
 use ulid::Ulid;
 
 // TODO: figure out how to build/install/include ripgrep inside logrs.
@@ -34,6 +36,16 @@ pub fn grep(pattern: &str, config: &Config) {
             }
         };
         let datetime = ulid.datetime().with_timezone(&Local);
-        println!("{} ({}):{}", datetime, ulid.to_string(), parts[1]);
+        // Colorizing the output. This is extremely ugly, anyone got ideas how
+        // to make this nicer?
+        let mut stdout = StandardStream::stdout(ColorChoice::Always);
+        stdout.set_color(ColorSpec::new().set_fg(Some(Color::Yellow)));
+        write!(&mut stdout, "{} ", datetime);
+        stdout.set_color(ColorSpec::new().set_fg(Some(Color::Green)));
+        write!(&mut stdout, "({})", ulid.to_string());
+        stdout.set_color(ColorSpec::new().set_fg(Some(Color::Red)));
+        write!(&mut stdout, ":");
+        stdout.set_color(ColorSpec::new().set_fg(Some(Color::White)));
+        println!("{}", parts[1]);
     }
 }

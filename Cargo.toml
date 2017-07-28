@@ -8,5 +8,6 @@ authors = ["Az4reus <az4reus@gmail.com>", "Lukas Nemec <lu.nemec@gmail.com>"]
 chrono = "0.3"
 clap = "2"
 regex = "0.2"
+termcolor = "0.3"
 time = "0.1"
 ulid = "0.2.1"
