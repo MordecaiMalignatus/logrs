@@ -6,25 +6,29 @@ instead of for the things you write. You give it words, it logs those words
 and keeps them well-fed and safe. Just like that:
 
 ```
-$ logrs test!
-Noted.
+$ logrs add test!
+Noted. ... /logs/2017-07-28/01BP4JEXE2K174BDYAK00NTV84
 ```
 
 Logrs will also give you recaps of days:
 
 ```
 $ logrs show today
- 07:51 - Test for file display
- 14:09 - test!
+2017-07-28 11:20:23.671 +02:00 (01BP47YCKQ53DWVJTWENFWA0DA)
+test 1
+
+2017-07-28 14:24:10.946 +02:00 (01BP4JEXE2K174BDYAK00NTV84)
+test!
 ```
 
-It sorts them neatly into daily files in ISO (yyyy-mm-dd) format, into a folder of your choosing.
+It sorts them neatly into daily folders in ISO (yyyy-mm-dd) format, into a folder of your choosing.
 (For which you currently have to edit the code, dotfile soon to come.)
 
 ### That's all? What about searching?
 There's a `search` subcommand that wraps `grep`:
 ```
-$ logrs search logrs
+$ logrs search test
+/Users/lulu/logs/2017-07-28/01BP4JEXE2K174BDYAK00NTV84:test!
 /Users/az/logs//2016-10-18: 10:59 - wheee more improvements to logrs
 /Users/az/logs//2016-11-20: 16:13 - logrs test search string stuff.
 ```
@@ -47,8 +51,3 @@ and micromanaging bosses, like a voodoo charm.
 - `cd logrs`
 - `cargo build --release`
 - `ln -s /path/here/logrs/target/release/logrs /some/other/path/logrs`
-
-## Aaaaz, what's to come in the future?
-- [x] `logrs search` -- A simple wrapper for grep.
-- [x] `logrs show 2015-01-01` -- Arbitrary date retrieval
-- [ ] `logrs archive` -- Moving all things older to a month to a different folder, to avoid cluttering grep results. This will probably be automatic with a dotfile option.

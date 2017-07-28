@@ -1,7 +1,12 @@
 [package]
 name = "logrs"
-version = "0.1.0"
-authors = ["Az4reus <az4reus@gmail.com>"]
+description = "It's a logger. Or rather it's there for you to use, instead of for the things you write. You give it words, it logs those words and keeps them well-fed and safe."
+version = "0.2.0"
+authors = ["Az4reus <az4reus@gmail.com>", "Lukas Nemec <lu.nemec@gmail.com>"]
 
 [dependencies]
-chrono = "0.2"
+chrono = "0.3"
+clap = "2"
+regex = "0.2"
+time = "0.1"
+ulid = "0.2.1"
