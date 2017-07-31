@@ -11,3 +11,5 @@ regex = "0.2"
 termcolor = "0.3"
 time = "0.1"
 ulid = "0.2.1"
+grep = { version = "0.1.5", path = "grep" }
+ignore = { version = "0.2.2", path = "ignore" }

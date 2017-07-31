@@ -1,51 +1,75 @@
 use config::Config;
-use std::io::Write;
+use std::fs::File;
+use std::io::{BufReader, Read, Write};
 use std::path::PathBuf;
 use std::process::Command;
+use std::str;
 
 use chrono::prelude::Local;
+use ignore::WalkBuilder;
+use grep::{GrepBuilder, Match};
 use termcolor::{Color, ColorChoice, ColorSpec, StandardStream, WriteColor};
 use ulid::Ulid;
 
-// TODO: figure out how to build/install/include ripgrep inside logrs.
-// grep is nice, but it isn't available everywhere (looking at you Microsoft).
-// ripgrep has the advantage of being able to compile it with Rust right into
-// this program as a library (libripgrep) which is being worked on.
-pub fn grep(pattern: &str, config: &Config) {
-    let output = Command::new("rg")
-        .arg("-i")
-        .arg(pattern)
-        .arg(&config.base_filepath)
-        .output()
-        .expect("ripgrep failed to start for some reason");
+// Borrowed libraries from ripgrep, namely ignore and grep for directory walking
+// and line search. This is easier than including binaries.
+// TODO: this function is extremely UGLY! Rewrite!
+// TODO: add functionality for printing line numbers of matched files.
+// TODO: try showing some lines above and below match to give context, this may come in handy when dealing with larger files.
+pub fn custom_grep(pattern: &str, config: &Config) {
+    let grep = GrepBuilder::new(pattern).build().unwrap();
+    let mut stdout = StandardStream::stdout(ColorChoice::Always);
 
-    // We iterate over lines because we need to match and replace file path with
-    // more useful info - date and time + ULID.
-    let out = String::from_utf8_lossy(&output.stdout);
-    for line in out.lines() {
-        // Split each line by ":", which is ripgrep terminator for filename:match.
-        let parts: Vec<&str> = line.split(":").collect();
-        let path = PathBuf::from(parts[0]);
-        let file_name = path.file_name().unwrap().to_str().unwrap();
+    for result in WalkBuilder::new(&config.base_filepath).hidden(false).build() {
+        // Each item yielded by the iterator is either a directory entry or an
+        // error, so either print the path or the error.
+        match result {
+            Ok(entry) => {
+                if entry.path().is_dir() {
+                    continue;
+                }
 
-        let ulid = match Ulid::from_string(&file_name) {
-            Ok(ulid) => ulid,
-            Err(e) => {
-                eprintln!("Unable to parse ULID: {:?}", e);
-                return
-            }
-        };
-        let datetime = ulid.datetime().with_timezone(&Local);
-        // Colorizing the output. This is extremely ugly, anyone got ideas how
-        // to make this nicer?
-        let mut stdout = StandardStream::stdout(ColorChoice::Always);
-        stdout.set_color(ColorSpec::new().set_fg(Some(Color::Yellow)));
-        write!(&mut stdout, "{} ", datetime);
-        stdout.set_color(ColorSpec::new().set_fg(Some(Color::Green)));
-        write!(&mut stdout, "({})", ulid.to_string());
-        stdout.set_color(ColorSpec::new().set_fg(Some(Color::Red)));
-        write!(&mut stdout, ":");
-        stdout.set_color(ColorSpec::new().set_fg(Some(Color::White)));
-        println!("{}", parts[1]);
+                // Buffer to read file into.
+                let mut buf:Vec<u8> = Vec::new();
+                let mut f = File::open(entry.path()).unwrap();
+                let mut reader = BufReader::new(f);
+                let data = reader.read_to_end(&mut buf);
+
+                let file_name = entry.path().file_name().unwrap().to_str().unwrap();
+
+                let ulid = match Ulid::from_string(&file_name) {
+                    Ok(ulid) => ulid,
+                    Err(e) => {
+                        eprintln!("Unable to parse ULID: {:?}", e);
+                        return
+                    }
+                };
+                let datetime = ulid.datetime().with_timezone(&Local);
+
+                // Each match represents a line, with start and end byte position.
+                for m in grep.iter(&buf) {
+                    let mut last_written = 0;
+                    if last_written == 0 {
+                        stdout.set_color(ColorSpec::new().set_fg(Some(Color::Yellow)));
+                        write!(&mut stdout, "{} ", datetime);
+                        stdout.set_color(ColorSpec::new().set_fg(Some(Color::Green)));
+                        write!(&mut stdout, "({})", ulid.to_string());
+                        stdout.set_color(ColorSpec::new().set_fg(Some(Color::White)));
+                        write!(&mut stdout, ":");
+                    }
+
+                    let buf2 = &buf[m.start()..m.end()];
+                    for subm in grep.regex().find_iter(buf2) {
+                        stdout.write(&buf2[last_written..subm.start()]);
+                        stdout.set_color(ColorSpec::new().set_fg(Some(Color::Red)));
+                        stdout.write(&buf2[subm.start()..subm.end()]);
+                        stdout.set_color(ColorSpec::new().set_fg(Some(Color::White)));
+                        last_written = subm.end();
+                    }
+                    stdout.write(&buf2[last_written..]);
+                }
+            },
+            Err(err) => println!("error: {}", err),
+        }
     }
 }

@@ -1,5 +1,7 @@
 extern crate clap;
 extern crate chrono;
+extern crate grep;
+extern crate ignore;
 extern crate regex;
 extern crate termcolor;
 extern crate time;
@@ -70,6 +72,7 @@ fn main() {
         },
         ("show", Some(show_matches)) => {
             match show_matches.value_of("WHAT").unwrap() {
+                // TODO: try changing commands "today" and "yesterday" into subcommands.
                 "today" => show::show_today(&config),
                 "yesterday" => show::show_yesterday(&config),
                 date_or_id => {
@@ -85,7 +88,7 @@ fn main() {
         },
         ("search", Some(search_matches)) => {
             let pattern = search_matches.value_of("pattern").unwrap();
-            search::grep(pattern, &config);
+            search::custom_grep(pattern, &config);
         },
         _ => unreachable!(),
     }

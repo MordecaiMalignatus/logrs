@@ -90,6 +90,8 @@ fn show_dir(dir: PathBuf) {
     }
 }
 
+// TODO: maybe limit the size of file displayed to N lines when showing with "show today"
+// and show entire record when ID is given - try this how it works.
 fn show_file(path: PathBuf) {
     let file = match File::open(&path) {
         Ok(file) => file,
