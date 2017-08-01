@@ -11,6 +11,7 @@ use clap::{Arg, App, AppSettings, SubCommand};
 use regex::Regex;
 
 mod config;
+mod list;
 mod logger;
 mod search;
 mod show;
@@ -31,6 +32,9 @@ fn main() {
                 .required(true)
                 .help("Text you want to record, - for stdin")
             )
+        )
+        .subcommand(SubCommand::with_name("list")
+            .about("List all days with record")
         )
         .subcommand(SubCommand::with_name("show")
             .about("Display specific record or date")
@@ -69,6 +73,9 @@ fn main() {
                     return
                 }
             }
+        },
+        ("list", Some(_)) => {
+            list::days(&config);
         },
         ("show", Some(show_matches)) => {
             match show_matches.value_of("WHAT").unwrap() {

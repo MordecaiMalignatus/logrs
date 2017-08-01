@@ -1,13 +1,11 @@
 use config::Config;
 use std::fs::File;
 use std::io::{BufReader, Read, Write};
-use std::path::PathBuf;
-use std::process::Command;
 use std::str;
 
 use chrono::prelude::Local;
 use ignore::WalkBuilder;
-use grep::{GrepBuilder, Match};
+use grep::GrepBuilder;
 use termcolor::{Color, ColorChoice, ColorSpec, StandardStream, WriteColor};
 use ulid::Ulid;
 
@@ -31,9 +29,9 @@ pub fn custom_grep(pattern: &str, config: &Config) {
 
                 // Buffer to read file into.
                 let mut buf:Vec<u8> = Vec::new();
-                let mut f = File::open(entry.path()).unwrap();
+                let f = File::open(entry.path()).unwrap();
                 let mut reader = BufReader::new(f);
-                let data = reader.read_to_end(&mut buf);
+                reader.read_to_end(&mut buf);
 
                 let file_name = entry.path().file_name().unwrap().to_str().unwrap();
 
