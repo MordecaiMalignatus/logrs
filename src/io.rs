@@ -2,7 +2,7 @@ use std::io;
 use std::io::Error;
 use std::io::{Read, Write};
 use std::path::PathBuf;
-use std::fs::DirBuilder; 
+use std::fs::DirBuilder;
 use std::fs::OpenOptions;
 
 pub fn print_file(filename: PathBuf) -> Result<(), io::Error> {
@@ -31,23 +31,15 @@ pub fn read_file(filename: PathBuf) -> Result<String, Error> {
 }
 
 pub fn append_to_file(filename: &PathBuf, content: String) -> Result<usize, io::Error> {
-    let mut file = OpenOptions::new()
-        .create(true)
-        .append(true)
-        .open(filename)?;
-
+    let mut file = OpenOptions::new().create(true).append(true).open(filename)?;
     file.write(content.as_bytes())
 }
 
-pub fn write_to_file(filename: &PathBuf, content: String) -> Result<usize, io::Error> { 
-    let mut file = OpenOptions::new()
-        .create(true)
-        .write(true)
-        .open(filename)?;
-
+pub fn write_to_file(filename: &PathBuf, content: String) -> Result<usize, io::Error> {
+    let mut file = OpenOptions::new().create(true).write(true).open(filename)?;
     file.write(content.as_bytes())
 }
 
-pub fn create_path(path: &PathBuf) -> Result<(), io::Error> { 
+pub fn create_path(path: &PathBuf) -> Result<(), io::Error> {
     DirBuilder::new().recursive(true).create(path)
 }
