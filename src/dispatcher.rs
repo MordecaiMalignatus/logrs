@@ -69,7 +69,7 @@ fn dispatch_display(entry: &String, config: &Config) -> Result<(), io::Error> {
     let now = Local::now();
     let mut path = config.base_filepath.clone();
 
-    if entry.starts_with("show today") {
+    if entry.starts_with("show today") || entry == &("show".to_owned()) {
         let file_name = get_file_name(now.date());
         path.push(&file_name);
         print_file(path)
