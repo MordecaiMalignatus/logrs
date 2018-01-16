@@ -11,10 +11,12 @@ extern crate chrono;
 use self::chrono::*;
 
 pub fn dispatch(entry: String, config: &Config) -> Result<(), io::Error> {
-    match entry {
-        ref c if c.starts_with("show") => dispatch_display(&entry, config),
-        ref c if c.starts_with("search") => dispatch_search(&entry, config),
-        ref c if c.starts_with("repl") => dispatch_repl(config),
+    match entry.as_ref() {
+        // Display current file by default
+        "" => dispatch_display(&"show".to_owned(), config),
+        c if c.starts_with("show") => dispatch_display(&entry, config),
+        c if c.starts_with("search") => dispatch_search(&entry, config),
+        c if c.starts_with("repl") => dispatch_repl(config),
         _ => logger::log(&entry, config),
     }
 }
