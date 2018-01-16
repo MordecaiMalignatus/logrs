@@ -14,7 +14,9 @@ fn main() {
 
     match dispatcher::dispatch(arg_string, &config) {
         Ok(()) => {}
-        Err(e) => println!("Couldn't log entry, Reason: {}", e),
+        Err(e) => {
+            println!("{}", e);
+        }
     }
 }
 

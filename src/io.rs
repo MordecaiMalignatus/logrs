@@ -4,6 +4,7 @@ use std::io::{Read, Write};
 use std::path::PathBuf;
 use std::fs::DirBuilder;
 use std::fs::OpenOptions;
+use std::process; 
 
 pub fn print_file(filename: PathBuf) -> Result<(), io::Error> {
     match read_file(filename) {
@@ -11,8 +12,10 @@ pub fn print_file(filename: PathBuf) -> Result<(), io::Error> {
             println!("\n{}", content);
             Ok(())
         }
-
-        Err(e) => Err(e),
+        Err(e) => {
+            println!("Cannot print file: {}", e);
+            process::exit(1);
+        },
     }
 }
 
