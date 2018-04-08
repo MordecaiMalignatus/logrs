@@ -2,6 +2,12 @@
 name = "logrs"
 version = "0.1.0"
 authors = ["Az4reus <az4reus@gmail.com>"]
+description = "Record-keeping or diary tool."
+repository = "https://github.com/az4reus/logrs"
+homepage = "https://github.com/az4reus/logrs"
+license = "MIT"
+license_file = "LICENSE"
+readme = "README.md"
 
 [dependencies]
 chrono = "0.2"

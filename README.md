@@ -21,6 +21,8 @@ $ logrs show today
 It sorts them neatly into daily files in ISO (yyyy-mm-dd) format, into a folder of your choosing. 
 (by default, `~/logs/`, but editable in the `~/.logrs` dotfile which is created upon use.)
 
+Install with `cargo install logrs`.
+
 ### That's all? What about searching?
 There's a `search` subcommand that wraps `grep`:
 ```
@@ -46,15 +48,6 @@ something, a commit, a function, a ticket, a meeting, a conversation, and so on.
 This creates a very compact paper-ish trail that can be used to ward off annoying
 and micromanaging bosses, like a voodoo charm.
 
-## Okay, how do I get this thing?
-- `git clone https://github.com/az4reus/logrs`
-- `cd logrs`
-- `cargo build --release`
-- `ln -s /path/here/logrs/target/release/logrs /some/other/path/logrs`
-
 ## Aaaaz, what's to come in the future?
-- [x] `logrs search` -- A simple wrapper for grep.
-- [x] `logrs show 2015-01-01` -- Arbitrary date retrieval
-- [x] The dotfile -- This is the urgent next-up thing that needs to happen
 - [ ] `logrs --config` -- In-program configuration of the info kept in the dotfile.
 - [ ] `logrs archive` -- Moving all things older to a month to a different folder, to avoid cluttering grep results. This will probably be automatic with a dotfile option.
